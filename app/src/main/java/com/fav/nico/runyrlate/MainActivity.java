@@ -85,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
     // make this at least however many pages you cathisn see
     pager.setOffscreenPageLimit(adapter.getCount());
     //A little space between pages
-    pager.setPageMargin(20);
     pager.setPageTransformer(true, new ZoomOutPageTransformer(pager));
 
     //If hardware acceleration is enabled, you should also remove

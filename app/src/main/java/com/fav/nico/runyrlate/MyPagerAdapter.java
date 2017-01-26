@@ -5,6 +5,7 @@ import android.support.v4.view.PagerAdapter;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -19,11 +20,12 @@ public class MyPagerAdapter extends PagerAdapter {
   }
 
   @Override public Object instantiateItem(ViewGroup container, int position) {
-    TextView view = new TextView(context);
-    view.setText("Item " + position);
-    view.setGravity(Gravity.CENTER);
-    view.setBackground(context.getDrawable(R.drawable.background_border_purple));
 
+    String drawableName = "img" + (position % 12 + 1);
+    int resID = container.getResources().getIdentifier(drawableName, "drawable", context.getPackageName());
+
+    ImageView view = new ImageView(context);
+    view.setImageResource(resID);
     container.addView(view);
     return view;
   }
