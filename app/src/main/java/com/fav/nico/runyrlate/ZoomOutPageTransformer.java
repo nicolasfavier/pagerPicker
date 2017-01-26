@@ -8,11 +8,13 @@ import android.view.animation.Interpolator;
 import android.widget.TextView;
 
 public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
-  private static final float MIN_SCALE_X = 0.6f;
+  private static final float MIN_SCALE_X = 0.5f;
   private static final float MAX_SCALE_X = 1f;
-  private static final float MAX_SCALE_Y = 1f;
-  private static final float MIN_SCALE_Y = 0.5f;
-  private static final float NB_AFFECT = 2.8f;
+
+  //betwwen -1 and 1, -1 for top, 0 middle, 1 bottom
+  private static final float END_Y_OFFSET = 0f;
+  private static final float START_Y_OFFSET = 0.3f;
+  private static final float NB_AFFECT = 4f;
   private static final float MAX_ANGLE = 90f;
   Interpolator interpolator = new DecelerateInterpolator();
   int pageWidth = 263;
@@ -33,7 +35,7 @@ public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
     if (position < NB_AFFECT && position > -NB_AFFECT) {
 
       scaleFactor = (MIN_SCALE_X - MAX_SCALE_X) * interpolator.getInterpolation(Math.abs(position) / NB_AFFECT) + MAX_SCALE_X;
-      verticalFactor = (MIN_SCALE_Y - MAX_SCALE_Y) * interpolator.getInterpolation(Math.abs(position) / NB_AFFECT) + MAX_SCALE_Y;
+      verticalFactor = (START_Y_OFFSET - END_Y_OFFSET) * interpolator.getInterpolation(Math.abs(position) / NB_AFFECT) + END_Y_OFFSET;
 
       //float vertMargin = pageHeight * (1 - scaleFactor) / 2;
       //float horzMargin = pageWidth * (1 - scaleFactor) / 2;
@@ -46,7 +48,7 @@ public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
     } else {
       angleFactor = 0;
       scaleFactor = MIN_SCALE_X;
-      verticalFactor = MIN_SCALE_Y;
+      verticalFactor = START_Y_OFFSET;
       margeFactor = 0;
     }
     int sign = position > 0 ? 1 : -1;
